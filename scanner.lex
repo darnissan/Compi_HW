@@ -37,10 +37,12 @@ whitespace ([ \t\n])
 "=" {showToken("ASSIGN"); return ASSIGN;}
 "=="|"!="|"<"|">"|"<="|">=" {showToken("RELOP"); return RELOP;}
 "+"|"-"|"*"|"/" {showToken("BINOP"); return BINOP;}
-"//"(.)* { return COMMENT;}
+"//"[^"\n"]*  { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
-[1-9]{digit}* {showToken("NUM"); return NUM;}
+0|[1-9]{digit}* {showToken("NUM"); return NUM;}
 \"(.)*\"  {return STRING;}
+[ \t\n\r]+     ;  // ignore whitespace
+
 . {showToken("UNKNOWN"); return UNKNOWN;}
 %%
 // showToken should print in the following foramt <line number> <token name> <value>

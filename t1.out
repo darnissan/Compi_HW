@@ -1,46 +1,26 @@
 1 INT int
-1 UNKNOWN  
 1 ID main
 1 LPAREN (
 1 RPAREN )
-1 UNKNOWN  
 1 LBRACE {
-
-1 UNKNOWN 	
-1 INT int
-1 UNKNOWN  
-1 ID x
-1 UNKNOWN  
-1 ASSIGN =
-1 UNKNOWN  
-1 NUM 5
-1 SC ;
-
-1 UNKNOWN 	
-1 INT int
-1 UNKNOWN  
-1 ID powerOfx
-1 UNKNOWN  
-1 ASSIGN =
-1 UNKNOWN  
-1 ID x
-1 UNKNOWN  
-1 BINOP *
-1 UNKNOWN  
-1 ID x
-1 SC ;
-
-1 UNKNOWN 	
-1 ID print
-1 LPAREN (
-1 ID x
-1 RPAREN )
-1 SC ;
-
-1 UNKNOWN 	
-1 RETURN return
-1 UNKNOWN  
-1 UNKNOWN 0
-1 SC ;
-
-1 RBRACE }
+2 INT int
+2 ID x
+2 ASSIGN =
+2 NUM 5
+2 SC ;
+3 INT int
+3 ID powerOfx
+3 ASSIGN =
+3 ID x
+3 BINOP *
+3 ID x
+3 SC ;
+4 ID print
+4 LPAREN (
+4 ID x
+4 RPAREN )
+4 SC ;
+5 RETURN return
+5 NUM 0
+5 SC ;
+6 RBRACE }
