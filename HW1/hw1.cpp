@@ -176,7 +176,7 @@ void string_handler(string str)
 			else
 			{
 				// If '\' is the last character,it's an error, exit the program
-				printf("Error: Invalid string\n");
+				printf("Error unclosed string\n");
 				exit(1);
 			}
 		}
