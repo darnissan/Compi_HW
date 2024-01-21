@@ -58,6 +58,7 @@ void AsciiEscape_handler(string str)
 	string max_ascii="0x7F";
 	if(ascii > strtol(max_ascii, NULL, 16)
 	{
+		printf("Error undefined escape sequence %s\n",hex);
 		return;
 	}
 	/********************************************************************************************************************
