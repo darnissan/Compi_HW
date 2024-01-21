@@ -54,6 +54,13 @@ void AsciiEscape_handler(string str)
 {
 	string hex = str.substr(2, 2);
 	int ascii = strtol(hex.c_str(), NULL, 16);
+	/********************************************************************************************************************
+	string max_ascii="0x7F";
+	if(ascii > strtol(max_ascii, NULL, 16)
+	{
+		return;
+	}
+	/********************************************************************************************************************
 	printf("%c", ascii);
 }
 void backslashZero_handler()
