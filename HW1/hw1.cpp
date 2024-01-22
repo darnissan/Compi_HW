@@ -56,20 +56,21 @@ void AsciiEscape_handler(string num)
 	int ascii = strtol(hex.c_str(), NULL, 16);
 	if (ascii == 0 && hex != "00")
 	{
-		printf("Error undefined escape sequence %s\n", hex);
+		printf("Error undefined escape sequence %s\n", hex.c_str());
 		exit(0);
 	}
 	string max_ascii = "0x7F";
 	if (ascii > strtol(max_ascii.c_str(), NULL, 16))
 	{
-		printf("Error undefined escape sequence %s\n", hex);
+		printf("Error undefined escape sequence %s\n", hex.c_str());
 		exit(0);
 	}
 	printf("%c", ascii);
 }
 void backslashZero_handler()
 {
-	printf("\0");
+	string str="\0";
+	printf("%s",str.c_str());
 }
 
 int main()

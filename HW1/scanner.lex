@@ -1,8 +1,10 @@
 %{
 /* Declartions Section */
 #include <stdio.h>
+#include <iostream>
 #include "tokens.hpp"
-void showToken(char *);
+using std::string;
+void showToken(string);
 %}
 
 %option yylineno
@@ -49,7 +51,7 @@ whitespace ([ \t\n])
 // showToken should print in the following foramt <line number> <token name> <value>
 // note that line number refers to the line number where the token ENDS not where it starts
 // value refers to the lexeme excluding comments and strings
-void showToken(char *tokenName)
+void showToken(string tokenName)
 {
-    printf("%d %s %s\n", yylineno, tokenName, yytext);
+    printf("%d %s %s\n", yylineno, tokenName.c_str(), yytext);
 }
