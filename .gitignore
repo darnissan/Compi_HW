@@ -1,5 +1,5 @@
 *.out
 *.in
-lex.yy.c
+HW1/lex.yy.c
 *.zip
-COMPI_HW1-main from/
+
