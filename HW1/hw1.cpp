@@ -50,15 +50,15 @@ void backslashQuote_handler()
 	printf("\"");
 }
 
-void AsciiEscape_handler(string str)
+void AsciiEscape_handler(string str, int index)
 {
 	string hex = str.substr(2, 2);
 	int ascii = strtol(hex.c_str(), NULL, 16);
-	string max_ascii="0x7F";
-	if(ascii > strtol(max_ascii, NULL, 16))
+	string max_ascii = "0x7F";
+	if (ascii > strtol(max_ascii.c_str(), NULL, 16))
 	{
-		printf("Error undefined escape sequence %s\n",hex);
-		return;
+		printf("Error undefined escape sequence %s\n", hex);
+		exit(0);
 	}
 	printf("%c", ascii);
 }
@@ -137,47 +137,28 @@ void string_handler(string str)
 					index += 2;
 					break;
 				default:
-					if (str[index] == '\n')
-					{
-						printf("Error unclosed string\\n\n");
-						exit(0);
-					}
+
+					printf("Error undefined escape sequence %c\n", str[index + 1]);
 					// check ascii value of the character is in the range of  0x00-0x7F
 					if (str[index] < 0x00 && str[index] > 0x7F)
 					{
 						printf("Error %c\n", str[index]);
 						exit(0);
 					}
-					if (str.find("\\q") == str.front())
-					{
-						printf("Error undefined escape sequence q\n");
-						exit(0);
-					}
-					if (str.find("\\xFT") == str.front())
-					{
-						printf("Error undefined escape sequence xFT\n");
-						exit(0);
-					}
-					if (str.find("\\xqqq") == str.front())
-					{
-						printf("Error undefined escape sequence xqqq\n");
-						exit(0);
-					}
-					if (str.find("\\zzzzz") == str.front())
-					{
-						printf("Error undefined escape sequence z\n");
-						exit(0);
-					}
-					printf("%c", str[index]);
-					index++;
-					break;
+
+					exit(0);
 				}
+			}
+			else if (str[index] == '\n')
+			{
+				printf("Error unclosed string\\n\n");
+				exit(0);
 			}
 			else
 			{
 				// If '\' is the last character,it's an error, exit the program
 				printf("Error unclosed string\n");
-				exit(1);
+				exit(0);
 			}
 		}
 		else
