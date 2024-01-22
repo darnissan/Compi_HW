@@ -11,7 +11,7 @@ void backslashR_handler();
 void backslashT_handler();
 void doubleBackslash_handler();
 void backslashQuote_handler();
-void AsciiEscape_handler(sstring str);
+void AsciiEscape_handler(string num);
 
 string trimFirst_N_Last(string str)
 {
@@ -50,13 +50,13 @@ void backslashQuote_handler()
 	printf("\"");
 }
 
-void AsciiEscape_handler(string str)
+void AsciiEscape_handler(string num)
 {
-	string hex = str.substr(1,2);
+	string hex = num;
 	int ascii = strtol(hex.c_str(), NULL, 16);
 	if (ascii == 0 && hex != "00")
 	{
-		printf("Error undefined escape sequence %s\n", str);
+		printf("Error undefined escape sequence %s\n", hex);
 		exit(0);
 	}
 	string max_ascii = "0x7F";
@@ -133,7 +133,7 @@ void string_handler(string str)
 				case 'x':
 					if (index + 3 < str.length())
 					{
-						AsciiEscape_handler(str.substr(index + 1));
+						AsciiEscape_handler(str.substr(index + 2,2));
 						index += 4;
 					}
 					else
