@@ -81,18 +81,23 @@ int main()
 
 		switch (token)
 		{
-		case STRING:
-		{
-			string str_token = yytext;
-			string_handler(str_token);
-		}
-		break;
-		case COMMENT:
-			printf("%d COMMENT //\n", yylineno);
-			break;
-		default:
-			// Handle other cases or skip
-			break;
+			case STRING:
+				{
+				string str_token = yytext;
+				string_handler(str_token);
+				}
+				break;
+			case COMMENT:
+				printf("%d COMMENT //\n", yylineno);
+				break;
+			//Dealing with illegal chars
+			case UNKNOWN:
+				printf("Error %c\n",*yytext);
+				exit(0);
+				break;
+			default:
+				// Handle other cases or skip
+				break;
 		}
 	}
 	return 0;

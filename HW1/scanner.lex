@@ -46,7 +46,7 @@ whitespace ([ \t\n])
 
 [ \t\n\r]+     ;  // ignore whitespace
 
-. {showToken("UNKNOWN"); return UNKNOWN;}
+. { return UNKNOWN;}
 %%
 // showToken should print in the following foramt <line number> <token name> <value>
 // note that line number refers to the line number where the token ENDS not where it starts
