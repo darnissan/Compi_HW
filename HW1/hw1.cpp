@@ -139,7 +139,9 @@ void string_handler(string str)
 					else
 					{
 						printf("Error undefined escape sequence %c", str[index + 1]);
-						printf("%c\n", str[index + 2]);
+						if(index+2 < str.length())
+							printf("%c", str[index + 2]);
+						printf("\n");
 						exit(0);
 					}
 					break;
