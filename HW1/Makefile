@@ -26,8 +26,15 @@ $(LEX_C_FILE): $(LEX_FILE)
 
 # Rule to execute the program with input and output redirection
 # Rule to execute the program with input and output redirection
+# Run rule for processing multiple files
+# Run rule for processing multiple files
 run: $(TARGET)
-	./$(TARGET) < my_t3.in > my_t3.out 
+	@for i in `seq 1 10`; do \
+		echo "Running test $$i..."; \
+		./$(TARGET) < ./Refrences/207231267-318261948.returned/t$$i.in > ./Refrences/dars_out/my_t$$i.out; \
+	done
+
+
 
 
 # Phony targets

@@ -27,6 +27,7 @@ string trimFirst_N_Last(string str)
 
 void backslashN_handler()
 {
+
 	printf("\n");
 }
 
@@ -69,8 +70,8 @@ void AsciiEscape_handler(string num)
 }
 void backslashZero_handler()
 {
-	string str="\0";
-	printf("%s",str.c_str());
+	string str = "\0";
+	printf("%s", str.c_str());
 }
 
 int main()
@@ -81,23 +82,23 @@ int main()
 
 		switch (token)
 		{
-			case STRING:
-				{
-				string str_token = yytext;
-				string_handler(str_token);
-				}
-				break;
-			case COMMENT:
-				printf("%d COMMENT //\n", yylineno);
-				break;
-			//Dealing with illegal chars
-			case UNKNOWN:
-				printf("Error %c\n",*yytext);
-				exit(0);
-				break;
-			default:
-				// Handle other cases or skip
-				break;
+		case STRING:
+		{
+			string str_token = yytext;
+			string_handler(str_token);
+		}
+		break;
+		case COMMENT:
+			printf("%d COMMENT //\n", yylineno);
+			break;
+		// Dealing with illegal chars
+		case UNKNOWN:
+			printf("Error %c\n", *yytext);
+			exit(0);
+			break;
+		default:
+			// Handle other cases or skip
+			break;
 		}
 	}
 	return 0;
@@ -139,13 +140,13 @@ void string_handler(string str)
 				case 'x':
 					if (index + 3 < str.length())
 					{
-						AsciiEscape_handler(str.substr(index + 2,2));
+						AsciiEscape_handler(str.substr(index + 2, 2));
 						index += 4;
 					}
 					else
 					{
 						printf("Error undefined escape sequence %c", str[index + 1]);
-						if(index+2 < str.length())
+						if (index + 2 < str.length())
 							printf("%c", str[index + 2]);
 						printf("\n");
 						exit(0);
@@ -173,6 +174,7 @@ void string_handler(string str)
 				exit(0);
 			}
 		}
+
 		else
 		{
 			// Print characters other than backslash as they are
