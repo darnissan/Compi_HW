@@ -114,6 +114,7 @@ int main()
 	int token;
 	while ((token = yylex()))
 	{
+		cout << yytext << endl;
 		switch (token)
 		{
 		case STRING:
@@ -129,6 +130,10 @@ int main()
 			cout << "Error " << *yytext << endl;
 			exit(0);
 			break;
+		case UNCLOSED:
+			cout << "Error unclosed string" << endl;
+			exit(0);
+			break;
 		default:
 			// Handle other cases or skip
 			break;
@@ -136,3 +141,4 @@ int main()
 	}
 	return 0;
 }
+
