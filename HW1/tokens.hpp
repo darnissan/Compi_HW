@@ -33,7 +33,8 @@ enum tokentype
   NUM = 28,
   STRING = 29,
   OVERRIDE = 30,
-  UNKNOWN = 31
+  UNKNOWN = 31,
+  UNCLOSED = 32
 };
 extern int yylineno;
 extern char *yytext;
