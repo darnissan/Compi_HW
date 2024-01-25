@@ -1,5 +1,4 @@
-*.out
-*.in
+
 HW1/lex.yy.c
 *.zip
 HW1/Refrences
