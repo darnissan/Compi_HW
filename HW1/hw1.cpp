@@ -62,7 +62,7 @@ void string_handler(const string &str)
 					if (index + 3 < length)
 					{
 						handleAsciiEscape(trimmed.substr(index + 2, 2), to_print);
-						index += 3; // Skip the x and two hex digits
+						index += 2; // Skip the /x and two hex digits in line 84
 					}
 					else
 					{
