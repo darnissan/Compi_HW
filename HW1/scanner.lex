@@ -42,7 +42,7 @@ whitespace ([ \t\n])
 "//"[^"\n"]*  { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"(\\\"|[^\"])*\"  {return STRING;}
+\"(\\\"|[^\"])*\"$  {return STRING;}
 \"(\\\"|[^\"])*  {return UNCLOSED;}
 
 [ \t\n\r]+     ;  // ignore whitespace
