@@ -76,6 +76,7 @@ void string_handler(const string &str)
 				case '0':
 					index = length;
 					break;
+
 				default:
 					cout << "Error undefined escape sequence " << trimmed[index + 1] << endl;
 					exit(0);
@@ -88,6 +89,11 @@ void string_handler(const string &str)
 				cout << "Error unclosed string" << endl;
 				exit(0);
 			}
+		}
+		else if (trimmed[index] == '\0')
+		{
+
+			index = length;
 		}
 		else if (trimmed[index] == '\n')
 		{

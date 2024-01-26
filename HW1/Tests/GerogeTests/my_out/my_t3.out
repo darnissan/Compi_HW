@@ -96,12 +96,27 @@ e
 
 26 RELOP >=
 27 RPAREN )
-30 STRING 		
+28 STRING 		
 -""46
 A{>e!;a\K#3
 Z\39p	k&wKeq}
 
 
-30 NUM 14
-30 LPAREN (
-Error \
+28 ID e8f3jC3Hx9g2aH348M0TJ7C29JMZ935AB0Zgf011R0iG1YOH
+28 COMMENT //
+28 ID g4188cpM8cU58HJ1rNIbD4NRwq2GPz
+28 RELOP <=
+29 BINOP +
+30 STRING 	14(hx
+	H5	x]mp
+&Jy
+.	\6[""m+oe/\	Ekp
+Lwwm 
+30 BINOP /
+30 BINOP -
+30 RELOP <=
+30 NUM 547
+30 VOID void
+30 STRING |\kN$\"6s=2
+30 BINOP -
+30 BINOP -

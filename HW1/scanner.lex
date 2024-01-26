@@ -12,6 +12,9 @@ void showToken(string);
 digit ([0-9])
 letter ([a-zA-Z])
 whitespace ([ \t\n])
+escape           ([\\ntr\"0])
+string           ([ !#-\[\]-~	])
+hex              (x[0-7][0-9A-Fa-f])
 %%
 "void" {showToken("VOID"); return VOID;}
 "int" {showToken("INT"); return INT;}
@@ -42,8 +45,8 @@ whitespace ([ \t\n])
 \/\/[^\n\r]*    { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"(\\\"|[^\"])*\"  {return STRING;}
-\"(\\\"|[^\"])*  {return UNCLOSED;}
+\"({string}|\\{escape}|\\{hex})*\"         {return STRING;}
+\"({string}|\\{escape}|\\{hex})*   {return UNCLOSED;}
 [ \t\n\r]+     ;  // ignore whitespace
 
 . { return UNKNOWN;}
