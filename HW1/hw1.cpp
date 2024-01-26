@@ -20,7 +20,12 @@ string trimFirst_N_Last(const string &str)
 void handleAsciiEscape(const string &num, string &result)
 {
 	long ascii = strtol(num.c_str(), nullptr, 16);
-	if ((ascii == 0 && num != "00") || ascii > 0x7F)
+	long min_range_print=strtol("20", nullptr, 16);
+	long max_range_print=strtol("7E", nullptr, 16);
+	long special_print1=strtol("09", nullptr, 16);
+	long special_print2=strtol("0A", nullptr, 16);
+	long special_print3=strtol("0D", nullptr, 16);
+	if (!((ascii >=  min_range_print && ascii <= max_range_print) || ascii == special_print1 || ascii == special_print2 ||  ascii == special_print3))
 	{
 		cout << "Error undefined escape sequence x" << num << endl;
 		exit(0);
