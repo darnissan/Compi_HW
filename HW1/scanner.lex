@@ -42,8 +42,8 @@ whitespace ([ \t\n\r])
 "//"[^\n]\r*  { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"(\\\"|[^\"])*\"$  {return STRING;}
-\"(\\\"|[^\"])*  {return UNCLOSED;}
+\"(\\\")*(([^\\]|(\\\\))+\\\"|[^\"])*\" {return STRING;}
+\"(\\\")*(([^\\]|(\\\\))+\\\"|[^\"])*  {return UNCLOSED;}
 
 {whitespace}+     ;  // ignore whitespace
 
