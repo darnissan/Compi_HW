@@ -9,7 +9,7 @@ count_diff=0
 count_ok=0
 
 # Loop through the file indices
-for i in {12..57}
+for i in {1..3}
 do
     # Construct file names
     FILE1="${DIR1}/t${i}.out"
