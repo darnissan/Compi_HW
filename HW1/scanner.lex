@@ -11,7 +11,7 @@ void showToken(string);
 %option noyywrap
 digit ([0-9])
 letter ([a-zA-Z])
-whitespace ([ \t\n])
+whitespace ([ \t\n\r])
 %%
 "void" {showToken("VOID"); return VOID;}
 "int" {showToken("INT"); return INT;}
@@ -45,7 +45,7 @@ whitespace ([ \t\n])
 \"(\\\"|[^\"])*\"$  {return STRING;}
 \"(\\\"|[^\"])*  {return UNCLOSED;}
 
-[ \t\n\r]+     ;  // ignore whitespace
+{whitespace}+     ;  // ignore whitespace
 
 . { return UNKNOWN;}
 %%
