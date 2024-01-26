@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <cstring>
 
 using namespace std;
 
@@ -37,6 +38,7 @@ void string_handler(const string &str)
 
 	while (index < length)
 	{
+
 		if (trimmed[index] == '\\')
 		{
 			if (index + 1 < length)
@@ -47,7 +49,7 @@ void string_handler(const string &str)
 					to_print += "\n";
 					break;
 				case 'r':
-					to_print += "\r";
+					to_print += '\r';
 					break;
 				case 't':
 					to_print += "\t";
@@ -62,6 +64,7 @@ void string_handler(const string &str)
 					if (index + 3 < length)
 					{
 						handleAsciiEscape(trimmed.substr(index + 2, 2), to_print);
+
 						index += 2; // Skip the /x and two hex digits in line 84
 					}
 					else
@@ -74,7 +77,7 @@ void string_handler(const string &str)
 					}
 					break;
 				case '0':
-					index = length;
+
 					break;
 
 				default:
@@ -137,7 +140,17 @@ int main()
 			exit(0);
 			break;
 		case UNCLOSED:
+
 			cout << "Error unclosed string" << endl;
+			exit(0);
+			break;
+		case INVALID_HEX:
+			cout << "Error undefined escape sequence x" << yytext[strlen(yytext) - 2] << yytext[strlen(yytext) - 1] << endl;
+			exit(0);
+			break;
+		case INVALID_ESCAPE_SEQUENCE:
+
+			cout << "Error undefined escape sequence " << yytext[strlen(yytext) - 1] << endl;
 			exit(0);
 			break;
 		default:

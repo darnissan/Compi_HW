@@ -47,6 +47,8 @@ hex              (x[0-7][0-9A-Fa-f])
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
 \"({string}|\\{escape}|\\{hex})*\"         {return STRING;}
 \"({string}|\\{escape}|\\{hex})*   {return UNCLOSED;}
+\"({string}|\\{escape}|\\{hex})*\\[^\\ntr\"0]                                         {return INVALID_ESCAPE_SEQUENCE;}
+\"({string}|\\{escape}|\\{hex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) {return INVALID_HEX;}
 [ \t\n\r]+     ;  // ignore whitespace
 
 . { return UNKNOWN;}

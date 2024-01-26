@@ -34,7 +34,9 @@ enum tokentype
   STRING = 29,
   OVERRIDE = 30,
   UNKNOWN = 31,
-  UNCLOSED = 32
+  UNCLOSED = 32,
+  INVALID_HEX = 33,
+  INVALID_ESCAPE_SEQUENCE = 34,
 };
 extern int yylineno;
 extern char *yytext;
