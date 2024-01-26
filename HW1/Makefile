@@ -29,9 +29,9 @@ $(LEX_C_FILE): $(LEX_FILE)
 # Run rule for processing multiple files
 # Run rule for processing multiple files
 run: $(TARGET)
-	@for i in `seq 1 11`; do \
+	@for i in `seq 1 57`; do \
 		echo "Running test $$i..."; \
-		./$(TARGET) < ./Refrences/207231267-318261948.returned/t$$i.in > ./Refrences/dars_out/my_t$$i.out; \
+		./$(TARGET) < ./Tests/GerogeTests/input/t$$i.in > ./Tests/GerogeTests/my_out/my_t$$i.out; \
 	done
 
 

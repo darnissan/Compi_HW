@@ -74,7 +74,7 @@ void string_handler(const string &str)
 					}
 					break;
 				case '0':
-					to_print += "\0";
+					index = length;
 					break;
 				default:
 					cout << "Error undefined escape sequence " << trimmed[index + 1] << endl;
@@ -114,7 +114,7 @@ int main()
 	int token;
 	while ((token = yylex()))
 	{
-		cout << yytext << endl;
+
 		switch (token)
 		{
 		case STRING:
@@ -141,4 +141,3 @@ int main()
 	}
 	return 0;
 }
-
