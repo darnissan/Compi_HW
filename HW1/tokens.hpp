@@ -31,12 +31,12 @@ enum tokentype
   COMMENT = 26,
   ID = 27,
   NUM = 28,
-  STRING = 29,
+  VALID_STRING = 29,
   OVERRIDE = 30,
   UNKNOWN = 31,
-  UNCLOSED = 32,
-  INVALID_HEX = 33,
-  INVALID_ESCAPE_SEQUENCE = 34,
+  UNCLOSED_STRING = 32,
+  ILLEGEL_HEX = 33,
+  ILLEGEL_ESC_SEQ = 34,
 };
 extern int yylineno;
 extern char *yytext;

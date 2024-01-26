@@ -12,9 +12,9 @@ void showToken(string);
 digit ([0-9])
 letter ([a-zA-Z])
 whitespace ([ \t\n])
-escape           ([\\ntr\"0])
-string           ([ !#-\[\]-~	])
-hex              (x[0-7][0-9A-Fa-f])
+valid_escape_seq           ([\\ntr\"0]) 
+valid_string           ([ !#-\[\]-~	])
+valid_hex              (x[0-7][0-9A-Fa-f]) 
 %%
 "void" {showToken("VOID"); return VOID;}
 "int" {showToken("INT"); return INT;}
@@ -45,10 +45,10 @@ hex              (x[0-7][0-9A-Fa-f])
 \/\/[^\n\r]*    { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"({string}|\\{escape}|\\{hex})*\"         {return STRING;}
-\"({string}|\\{escape}|\\{hex})*   {return UNCLOSED;}
-\"({string}|\\{escape}|\\{hex})*\\[^\\ntr\"0]                                         {return INVALID_ESCAPE_SEQUENCE;}
-\"({string}|\\{escape}|\\{hex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) {return INVALID_HEX;}
+\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*\"         {return VALID_STRING;}
+\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*   {return UNCLOSED_STRING;}
+\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*\\[^\\ntr\"0]                                         {return ILLEGEL_ESC_SEQ;}
+\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) {return ILLEGEL_HEX;}
 [ \t\n\r]+     ;  // ignore whitespace
 
 . { return UNKNOWN;}

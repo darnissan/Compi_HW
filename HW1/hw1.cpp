@@ -126,7 +126,7 @@ int main()
 
 		switch (token)
 		{
-		case STRING:
+		case VALID_STRING:
 		{
 			string str_token = yytext;
 			string_handler(str_token);
@@ -139,16 +139,16 @@ int main()
 			cout << "Error " << *yytext << endl;
 			exit(0);
 			break;
-		case UNCLOSED:
+		case UNCLOSED_STRING:
 
 			cout << "Error unclosed string" << endl;
 			exit(0);
 			break;
-		case INVALID_HEX:
+		case ILLEGEL_HEX:
 			cout << "Error undefined escape sequence x" << yytext[strlen(yytext) - 2] << yytext[strlen(yytext) - 1] << endl;
 			exit(0);
 			break;
-		case INVALID_ESCAPE_SEQUENCE:
+		case ILLEGEL_ESC_SEQ:
 
 			cout << "Error undefined escape sequence " << yytext[strlen(yytext) - 1] << endl;
 			exit(0);
