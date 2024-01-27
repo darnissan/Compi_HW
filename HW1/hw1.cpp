@@ -5,6 +5,7 @@
 #define UNCLOSED 29
 #define BAD_ESCAPE 30
 #define INVALID_HEX 31
+#define UNKNOWN 32
 using namespace std;
 
 string trimFirst_N_Last(const string &str);
@@ -152,10 +153,14 @@ int main()
 				cout << "Error undefined escape sequence x" << yytext[yyleng-1] <<endl;
 			exit(0);
 			break;
-		default:
+		case UNKNOWN:
 			// Handle error
 			cout << "Error " << *yytext << endl;
 			exit(0);
+			break;
+
+		default:
+			// Do nothing
 			break;
 		}
 	}
