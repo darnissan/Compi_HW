@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-
+#define UNCLOSED 29
+#define BAD_ESCAPE 30
+#define INVALID_HEX 31
 using namespace std;
 
 string trimFirst_N_Last(const string &str);
@@ -137,18 +139,14 @@ int main()
 		case COMMENT:
 			cout << yylineno << " COMMENT //" << endl;
 			break;
-		case BADESCAPE:
+		case BAD_ESCAPE:
 			cout << "Error undefined escape sequence " << yytext[yyleng-1] <<endl;
-			break;
-		case UNKNOWN:
-			cout << "Error " << *yytext << endl;
-			exit(0);
 			break;
 		case UNCLOSED:
 			cout << "Error unclosed string" << endl;
 			exit(0);
 			break;
-		case INVALIDHEX:
+		case INVALID_HEX:
 			if(yytext[yyleng-3]== 'x')
 				cout << "Error undefined escape sequence x" << yytext[yyleng-2] << yytext[yyleng-1] <<endl;
 			else
@@ -156,7 +154,9 @@ int main()
 			exit(0);
 			break;
 		default:
-			// Handle other cases or skip
+			// Handle error
+			cout << "Error " << *yytext << endl;
+			exit(0);
 			break;
 		}
 	}
