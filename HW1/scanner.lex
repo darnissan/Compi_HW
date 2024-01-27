@@ -9,6 +9,7 @@ void showToken(string);
 #define UNCLOSED 29
 #define BAD_ESCAPE 30
 #define INVALID_HEX 31
+#define UNKNOWN 32
 %}
 
 %option yylineno
@@ -53,7 +54,7 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 \"({strchars}|\\{afterBacklash}|\\{validhex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) return INVALID_HEX;
 {whitespace}+     ;  // ignore whitespace
 
-. ;
+	. {return UNKNOWN;};
 %%
 //validhex ((\x0[9AD])| \x[2-6][0-9A-Fa-f] | x[7][0-9A-Ea-e])
 // showToken should print in the following foramt <line number> <token name> <value>
