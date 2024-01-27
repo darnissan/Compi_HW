@@ -11,10 +11,10 @@ void showToken(string);
 %option noyywrap
 digit ([0-9])
 letter ([a-zA-Z])
-whitespace ([ \t\n])
-valid_escape_seq           ([\\ntr\"0]) 
-valid_string           ([ !#-\[\]-~	])
-valid_hex              (x[0-7][0-9A-Fa-f]) 
+whitespace ([ \t\n\r])
+afterBacklash([ntr0\"\\])
+validhex (x[0-7][0-9A-Fa-f])
+strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 %%
 "void" {showToken("VOID"); return VOID;}
 "int" {showToken("INT"); return INT;}
@@ -42,17 +42,18 @@ valid_hex              (x[0-7][0-9A-Fa-f])
 "=" {showToken("ASSIGN"); return ASSIGN;}
 "=="|"!="|"<"|">"|"<="|">=" {showToken("RELOP"); return RELOP;}
 "+"|"-"|"*"|"/" {showToken("BINOP"); return BINOP;}
-\/\/[^\n\r]*    { return COMMENT;}
+"//"[^\n\r]*  { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*\"         {return VALID_STRING;}
-\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*   {return UNCLOSED_STRING;}
-\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*\\[^\\ntr\"0]                                         {return ILLEGEL_ESC_SEQ;}
-\"({valid_string}|\\{valid_escape_seq}|\\{valid_hex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) {return ILLEGEL_HEX;}
-[ \t\n\r]+     ;  // ignore whitespace
+\"({strchars}|\\{afterBacklash}|\\{validhex})*\"   {return STRING;}  
+\"({strchars}|\\{afterBacklash}|\\{validhex})*  {return UNCLOSED;}
+\"({strchars}|\\{afterBacklash}|\\{validhex})*\\[^ntr0\"\\]     {return BADESCAPE;}
+\"({strchars}|\\{afterBacklash}|\\{validhex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) return INVALIDHEX;
+{whitespace}+     ;  // ignore whitespace
 
 . { return UNKNOWN;}
 %%
+//validhex ((\x0[9AD])| \x[2-6][0-9A-Fa-f] | x[7][0-9A-Ea-e])
 // showToken should print in the following foramt <line number> <token name> <value>
 // note that line number refers to the line number where the token ENDS not where it starts
 // value refers to the lexeme excluding comments and strings
