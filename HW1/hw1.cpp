@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <cstring>
 
 using namespace std;
 
@@ -20,6 +19,19 @@ string trimFirst_N_Last(const string &str)
 
 void handleAsciiEscape(const string &num, string &result)
 {
+	/*
+	long ascii = strtol(num.c_str(), nullptr, 16);
+	long min_range_print=strtol("20", nullptr, 16);
+	long max_range_print=strtol("7E", nullptr, 16);
+	long special_print1=strtol("09", nullptr, 16);
+	long special_print2=strtol("0A", nullptr, 16);
+	long special_print3=strtol("0D", nullptr, 16);
+	if (!((ascii >=  min_range_print && ascii <= max_range_print) || ascii == special_print1 || ascii == special_print2 ||  ascii == special_print3))
+	{
+		cout << "Error undefined escape sequence x" << num << endl;
+		exit(0);
+	}
+	result += static_cast<char>(ascii);*/
 	long ascii = strtol(num.c_str(), nullptr, 16);
 	if ((ascii == 0 && num != "00") || ascii > 0x7F)
 	{
@@ -35,10 +47,8 @@ void string_handler(const string &str)
 	string trimmed = trimFirst_N_Last(str);
 	size_t index = 0;
 	size_t length = trimmed.length();
-
 	while (index < length)
 	{
-
 		if (trimmed[index] == '\\')
 		{
 			if (index + 1 < length)
@@ -49,7 +59,7 @@ void string_handler(const string &str)
 					to_print += "\n";
 					break;
 				case 'r':
-					to_print += '\r';
+					to_print += "\r";
 					break;
 				case 't':
 					to_print += "\t";
@@ -64,8 +74,7 @@ void string_handler(const string &str)
 					if (index + 3 < length)
 					{
 						handleAsciiEscape(trimmed.substr(index + 2, 2), to_print);
-
-						index += 2; // Skip the /x and two hex digits in line 84
+						index += 2; // Skip the x and two hex digits
 					}
 					else
 					{
@@ -77,9 +86,8 @@ void string_handler(const string &str)
 					}
 					break;
 				case '0':
-
+					to_print += "\0";
 					break;
-
 				default:
 					cout << "Error undefined escape sequence " << trimmed[index + 1] << endl;
 					exit(0);
@@ -88,15 +96,9 @@ void string_handler(const string &str)
 			}
 			else
 			{
-
 				cout << "Error unclosed string" << endl;
 				exit(0);
 			}
-		}
-		else if (trimmed[index] == '\0')
-		{
-
-			index = length;
 		}
 		else if (trimmed[index] == '\n')
 		{
@@ -123,10 +125,10 @@ int main()
 	int token;
 	while ((token = yylex()))
 	{
-
+					//cout << yytext << endl;
 		switch (token)
 		{
-		case VALID_STRING:
+		case STRING:
 		{
 			string str_token = yytext;
 			string_handler(str_token);
@@ -135,22 +137,22 @@ int main()
 		case COMMENT:
 			cout << yylineno << " COMMENT //" << endl;
 			break;
+		case BADESCAPE:
+			cout << "Error undefined escape sequence " << yytext[yyleng-1] <<endl;
+			break;
 		case UNKNOWN:
 			cout << "Error " << *yytext << endl;
 			exit(0);
 			break;
-		case UNCLOSED_STRING:
-
+		case UNCLOSED:
 			cout << "Error unclosed string" << endl;
 			exit(0);
 			break;
-		case ILLEGEL_HEX:
-			cout << "Error undefined escape sequence x" << yytext[strlen(yytext) - 2] << yytext[strlen(yytext) - 1] << endl;
-			exit(0);
-			break;
-		case ILLEGEL_ESC_SEQ:
-
-			cout << "Error undefined escape sequence " << yytext[strlen(yytext) - 1] << endl;
+		case INVALIDHEX:
+			if(yytext[yyleng-3]== 'x')
+				cout << "Error undefined escape sequence x" << yytext[yyleng-2] << yytext[yyleng-1] <<endl;
+			else
+				cout << "Error undefined escape sequence x" << yytext[yyleng-1] <<endl;
 			exit(0);
 			break;
 		default:
