@@ -127,7 +127,6 @@ int main()
 	int token;
 	while ((token = yylex()))
 	{
-					//cout << yytext << endl;
 		switch (token)
 		{
 		case STRING:
