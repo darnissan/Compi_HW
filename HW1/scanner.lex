@@ -25,7 +25,6 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 "byte" {showToken("BYTE"); return BYTE;}
 "b" {showToken("B"); return B;}
 "bool" {showToken("BOOL"); return BOOL;}
-"override" {showToken("OVERRIDE"); return OVERRIDE;}
 "and" {showToken("AND"); return AND;}
 "or" {showToken("OR"); return OR;}
 "not" {showToken("NOT"); return NOT;}
@@ -38,7 +37,6 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 "break" {showToken("BREAK"); return BREAK;}
 "continue" {showToken("CONTINUE"); return CONTINUE;}
 ";" {showToken("SC"); return SC;}
-"," {showToken("COMMA"); return COMMA;}
 "(" {showToken("LPAREN"); return LPAREN;}
 ")" {showToken("RPAREN"); return RPAREN;}
 "{" {showToken("LBRACE"); return LBRACE;}
@@ -51,7 +49,7 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
 \"({strchars}|\\{afterBacklash}|\\{validhex})*\"   {return STRING;}  
 \"({strchars}|\\{afterBacklash}|\\{validhex})*  {return UNCLOSED;}
-\"({strchars}|\\{afterBacklash}|\\{validhex})*\\[^ntr0\"\\]     {return BADESCAPE;}
+\"({strchars}|\\{afterBacklash}|\\{validhex})*\\[^ntr0\"\\]     {return BAD_ESCAPE;}
 \"({strchars}|\\{afterBacklash}|\\{validhex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) return INVALID_HEX;
 {whitespace}+     ;  // ignore whitespace
 
