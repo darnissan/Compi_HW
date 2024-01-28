@@ -56,6 +56,7 @@ strChars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 \"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x0[^9ADad] {return INVALID_HEX;}
 \"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x[2-6][^0-9A-Fa-f] {return INVALID_HEX;}
 \"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x7[^0-9A-Ea-e] {return INVALID_HEX;}
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x[^02-67]. {return INVALID_HEX;}
 \"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x[^02-67] {return INVALID_HEX;}
 {whitespace}+     ;  // ignore whitespace
 
