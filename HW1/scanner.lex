@@ -5,6 +5,11 @@
 #include "tokens.hpp"
 using std::string;
 void showToken(string);
+
+#define UNCLOSED 29
+#define BAD_ESCAPE 30
+#define INVALID_HEX 31
+#define UNKNOWN 32
 %}
 
 %option yylineno
@@ -12,13 +17,17 @@ void showToken(string);
 digit ([0-9])
 letter ([a-zA-Z])
 whitespace ([ \t\n\r])
+afterBacklash([ntr0\"\\])
+validHex1 (0[9ADad])
+validHex2 ([2-6][0-9A-Fa-f])
+validHex3 (7[0-9A-Ea-e])
+strChars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 %%
 "void" {showToken("VOID"); return VOID;}
 "int" {showToken("INT"); return INT;}
 "byte" {showToken("BYTE"); return BYTE;}
 "b" {showToken("B"); return B;}
 "bool" {showToken("BOOL"); return BOOL;}
-"override" {showToken("OVERRIDE"); return OVERRIDE;}
 "and" {showToken("AND"); return AND;}
 "or" {showToken("OR"); return OR;}
 "not" {showToken("NOT"); return NOT;}
@@ -31,7 +40,6 @@ whitespace ([ \t\n\r])
 "break" {showToken("BREAK"); return BREAK;}
 "continue" {showToken("CONTINUE"); return CONTINUE;}
 ";" {showToken("SC"); return SC;}
-"," {showToken("COMMA"); return COMMA;}
 "(" {showToken("LPAREN"); return LPAREN;}
 ")" {showToken("RPAREN"); return RPAREN;}
 "{" {showToken("LBRACE"); return LBRACE;}
@@ -39,16 +47,23 @@ whitespace ([ \t\n\r])
 "=" {showToken("ASSIGN"); return ASSIGN;}
 "=="|"!="|"<"|">"|"<="|">=" {showToken("RELOP"); return RELOP;}
 "+"|"-"|"*"|"/" {showToken("BINOP"); return BINOP;}
-"//"[^\n]\r*  { return COMMENT;}
+"//"[^\n\r]*  { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"(\\\")*(([^\\]|(\\\\))+\\\"|[^\"])*\" {return STRING;}
-\"(\\\")*(([^\\]|(\\\\))+\\\"|[^\"])*  {return UNCLOSED;}
-
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\"   {return STRING;}  
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*  {return UNCLOSED;}
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\[^ntr0\"\\]     {return BAD_ESCAPE;}
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x0[^9ADad] {return INVALID_HEX;}
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x[2-6][^0-9A-Fa-f] {return INVALID_HEX;}
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x7[^0-9A-Ea-e] {return INVALID_HEX;}
+\"({strChars}|\\{afterBacklash}|\\x({validHex1}|{validHex2}|{validHex3}))*\\x[^02-67] {return INVALID_HEX;}
 {whitespace}+     ;  // ignore whitespace
 
-. { return UNKNOWN;}
+. {return UNKNOWN;};
 %%
+//validhex ((\x0[9AD])| \x[2-6][0-9A-Fa-f] | x[7][0-9A-Ea-e])
+//validhex (x[0-7][0-9A-Fa-f])
+//\\x(0[^9ADad]| [2-6][^0-9A-Fa-f]| 7[^0-9A-Ea-e]| [^02-67]) 
 // showToken should print in the following foramt <line number> <token name> <value>
 // note that line number refers to the line number where the token ENDS not where it starts
 // value refers to the lexeme excluding comments and strings
