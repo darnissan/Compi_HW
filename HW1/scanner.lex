@@ -18,7 +18,8 @@ digit ([0-9])
 letter ([a-zA-Z])
 whitespace ([ \t\n\r])
 afterBacklash([ntr0\"\\])
-validhex x(0[9ADad]|[2-7][0-9A-Fa-f])
+validHex1 (0[9ADad])
+validHex2 ([2-7][0-9A-Fa-f])
 strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 %%
 "void" {showToken("VOID"); return VOID;}
@@ -48,14 +49,20 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 "//"[^\n\r]*  { return COMMENT;}
 [a-zA-Z]({letter}|{digit})* {showToken("ID"); return ID;}
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
-\"({strchars}|\\{afterBacklash}|\\{validhex})*\"   {return STRING;}  
-\"({strchars}|\\{afterBacklash}|\\{validhex})*  {return UNCLOSED;}
-\"({strchars}|\\{afterBacklash}|\\{validhex})*\\x((0[0-8]|0[bBcCe-fE-F]|1[0-9A-Fa-f]|[89A-Fa-f][0-9A-Fa-f])|([1-9A-Fa-f][^\"0-9A-Fa-f]|[^\"0-9A-Fa-f][0-9A-Fa-f]|[^\"0-9A-Fa-f][^\"0-9A-Fa-f]))  {return INVALID_HEX;}
-\"({strchars}|\\{afterBacklash}|\\{validhex})*(\\x[^\"]|\\x) {return INVALID_HEX;}
-\"({strchars}|\\{afterBacklash}|\\{validhex})*\\[^ntr0\"\\]     {return BAD_ESCAPE;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\"   {return STRING;}  
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*  {return UNCLOSED;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x0[0-8] {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x0[bBcCe-fE-F] {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x1[0-9A-Fa-f] {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x[89A-Fa-f][0-9A-Fa-f]  {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x[1-9A-Fa-f][^\"0-9A-Fa-f]  {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x[^\"0-9A-Fa-f][0-9A-Fa-f] {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\x[^\"0-9A-Fa-f][^\"0-9A-Fa-f]  {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*(\\x[^\"]|\\x) {return INVALID_HEX;}
+\"({strchars}|\\x({validHex1}|{validHex2})|\\{afterBacklash})*\\[^ntr0\"\\]     {return BAD_ESCAPE;}
 {whitespace}+     ;  // ignore whitespace
 
-	. {return UNKNOWN;};
+. {return UNKNOWN;};
 %%
 //validhex ((\x0[9AD])| \x[2-6][0-9A-Fa-f] | x[7][0-9A-Ea-e])
 // showToken should print in the following foramt <line number> <token name> <value>
