@@ -100,6 +100,7 @@ void string_handler(const string &str)
 			}
 			else
 			{
+
 				cout << "Error unclosed string" << endl;
 				exit(0);
 			}
@@ -114,6 +115,11 @@ void string_handler(const string &str)
 		{
 
 			cout << "Error unclosed string" << endl;
+			exit(0);
+		}
+		else if (trimmed[index] < 0x20 && trimmed[index] != 0x09 && trimmed[index] != 0x0A && trimmed[index] != 0x0D)
+		{
+			cout << "Error " << trimmed[index] << endl;
 			exit(0);
 		}
 		else
