@@ -36,7 +36,7 @@ void handleAsciiEscape(const string &num, string &result)
 	}
 	result += static_cast<char>(ascii);*/
 	long ascii = strtol(num.c_str(), nullptr, 16);
-	if ((ascii == 0 && num != "00") || ascii > 0x7F)
+	if ((ascii == 0 && num != "00") || ascii >= 0x7F || (ascii < 0x20 && ascii != 0x09 && ascii != 0x0A && ascii != 0x0D))
 	{
 		cout << "Error undefined escape sequence x" << num << endl;
 		exit(0);
@@ -89,7 +89,8 @@ void string_handler(const string &str)
 					}
 					break;
 				case '0':
-					to_print += "\0";
+					// finish the string reading
+					index = length;
 					break;
 				default:
 					cout << "Error undefined escape sequence " << trimmed[index + 1] << endl;
@@ -140,17 +141,17 @@ int main()
 			cout << yylineno << " COMMENT //" << endl;
 			break;
 		case BAD_ESCAPE:
-			cout << "Error undefined escape sequence " << yytext[yyleng-1] <<endl;
+			cout << "Error undefined escape sequence " << yytext[yyleng - 1] << endl;
 			break;
 		case UNCLOSED:
 			cout << "Error unclosed string" << endl;
 			exit(0);
 			break;
 		case INVALID_HEX:
-			if(yytext[yyleng-3]== 'x')
-				cout << "Error undefined escape sequence x" << yytext[yyleng-2] << yytext[yyleng-1] <<endl;
+			if (yytext[yyleng - 3] == 'x')
+				cout << "Error undefined escape sequence x" << yytext[yyleng - 2] << yytext[yyleng - 1] << endl;
 			else
-				cout << "Error undefined escape sequence x" << yytext[yyleng-1] <<endl;
+				cout << "Error undefined escape sequence x" << yytext[yyleng - 1] << endl;
 			exit(0);
 			break;
 		case UNKNOWN:
