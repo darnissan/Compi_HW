@@ -142,6 +142,7 @@ int main()
 			break;
 		case BAD_ESCAPE:
 			cout << "Error undefined escape sequence " << yytext[yyleng - 1] << endl;
+			exit(0);
 			break;
 		case UNCLOSED:
 			cout << "Error unclosed string" << endl;

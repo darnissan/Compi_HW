@@ -18,7 +18,8 @@ digit ([0-9])
 letter ([a-zA-Z])
 whitespace ([ \t\n\r])
 afterBacklash([ntr0\"\\])
-validhex (x[0-7][0-9A-Fa-f])
+validhex x(0[9ADad]|[2-7][0-9A-Fa-f])
+
 strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 %%
 "void" {showToken("VOID"); return VOID;}
@@ -50,8 +51,8 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 0|[1-9]{digit}* {showToken("NUM"); return NUM;}
 \"({strchars}|\\{afterBacklash}|\\{validhex})*\"   {return STRING;}  
 \"({strchars}|\\{afterBacklash}|\\{validhex})*  {return UNCLOSED;}
+\"({strchars}|\\{afterBacklash}|\\{validhex})*\\x((0[0-8]|0[bBcCe-fE-F]|1[0-9A-Fa-f]|[89A-Fa-f][0-9A-Fa-f])|([1-9A-Fa-f][^0-9A-Fa-f]|[^0-9A-Fa-f][0-9A-Fa-f]|[^0-9A-Fa-f][^0-9A-Fa-f]))  {return INVALID_HEX;}
 \"({strchars}|\\{afterBacklash}|\\{validhex})*\\[^ntr0\"\\]     {return BAD_ESCAPE;}
-\"({strchars}|\\{afterBacklash}|\\{validhex})*\\x([^0-7][0-9A-Fa-f]|[0-7][^0-9A-Fa-f]|[^0-7][^0-9A-Fa-f]|[^0-9A-Fa-f]) return INVALID_HEX;
 {whitespace}+     ;  // ignore whitespace
 
 	. {return UNKNOWN;};
