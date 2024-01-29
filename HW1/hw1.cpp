@@ -157,8 +157,10 @@ int main()
 		case INVALID_HEX:
 			if (yytext[yyleng - 3] == 'x')
 				cout << "Error undefined escape sequence x" << yytext[yyleng - 2] << yytext[yyleng - 1] << endl;
-			else
+			else if (yytext[yyleng - 2] == 'x')
 				cout << "Error undefined escape sequence x" << yytext[yyleng - 1] << endl;
+			else
+				cout << "Error undefined escape sequence x" << endl;
 			exit(0);
 			break;
 		case UNKNOWN:
