@@ -1,0 +1,82 @@
+%{
+#include <iostream>
+#include <string>
+#include "output.hpp"
+using namespace std;
+extern int yylineno; 
+int yylex();
+void yyerror(char *s);
+
+// You might need to define your own data structures or include other headers
+
+%}
+%token Program Statements Statement Exp Type Call
+%token LBRACE RBRACE ID SC ASSIGN LPAREN RPAREN IF ELSE WHILE BREAK CONTINUE RETURN INT BYTE BOOL STRING NUM TRUE FALSE BINOP RELOP AND OR NOT
+%token TYPE ID STRING
+%token  NUM
+
+%%
+
+Program:
+    Statements 
+    ;
+
+Statements:
+    Statement 
+    | Statements Statement 
+    ;
+
+Statement:
+    LBRACE Statements RBRACE 
+    | Type ID SC 
+    | Type ID ASSIGN Exp SC
+    | ID ASSIGN Exp SC
+    | Call SC
+    | RETURN SC
+    | IF LPAREN Exp RPAREN Statement
+    | IF LPAREN Exp RPAREN Statement ELSE Statement
+    | WHILE LPAREN Exp RPAREN Statement
+    | BREAK SC
+    | CONTINUE SC
+    ;
+
+Call:
+    ID LPAREN Exp RPAREN
+    ;
+
+Type:
+    INT     
+    | BYTE  
+    | BOOL 
+    ;
+
+Exp:
+    LPAREN Exp RPAREN
+    | Exp BINOP Exp
+    | ID
+    | Call
+    | NUM
+    | NUM B
+    | STRING
+    | TRUE
+    | FALSE
+    | NOT Exp
+    | Exp AND Exp
+    | Exp OR Exp
+    | Exp RELOP Exp
+    | LPAREN Type RPAREN Exp
+    ;
+
+%%
+
+// You can include C++ code here that defines any additional functions or data structures used above
+main()
+{
+ yyparse();
+} 
+int yyerror(char * s)
+{
+ printf("Parse error: %s! Bye now\n");
+ exit(1);
+ return 0;
+} 
