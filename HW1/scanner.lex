@@ -64,7 +64,6 @@ strchars ([\x9\x20-\x21\x23-\x5B\x5D-\x7E])
 
 . {return UNKNOWN;};
 %%
-//validhex ((\x0[9AD])| \x[2-6][0-9A-Fa-f] | x[7][0-9A-Ea-e])
 // showToken should print in the following foramt <line number> <token name> <value>
 // note that line number refers to the line number where the token ENDS not where it starts
 // value refers to the lexeme excluding comments and strings
@@ -72,3 +71,9 @@ void showToken(string tokenName)
 {
     printf("%d %s %s\n", yylineno, tokenName.c_str(), yytext);
 }
+
+
+
+
+
+
