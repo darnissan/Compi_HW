@@ -39,12 +39,13 @@ whitespace ([ \t\n\r])
 "{" { return LBRACE;}
 "}" { return RBRACE;}
 "=" {return ASSIGN;}
+"++|--" {return DOUBLEOP;}
 "=="|"!="|"<"|">"|"<="|">=" { return RELOP;}
 "+"|"-"|"*"|"/" { return BINOP;}
 [a-zA-Z][a-zA-Z0-9]*  { return ID;}
 0|[1-9][0-9]* { return NUM;}
-"([^\n\r\"\\]|\\[rnt"\\])+" { return STRING;}
- //[^\r\n]*[ \r|\n|\r\n]? { return COMMENT;}
+\"([^\n\r\"\\]|\\[rnt"\\])+\" { return STRING;}
+"(int)" | "(void)" | "(bool)" | "(byte) {return CAST}
 {whitespace}+     ;  // ignore whitespace
 
 . {return UNKNOWN;};
