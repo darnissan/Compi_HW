@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-using namespace std;
 
 namespace output
 {
@@ -46,27 +45,5 @@ enum class TOKENS
     DOUBLEO,
     CAST
 };
-struct Node
-{
-};
-enum class TypeEnum
-{
-    INT,
-    BYTE,
-    BOOL,
 
-};
-class Type : public Node
-{
-public:
-    TypeEnum type;
-    Type(TypeEnum type) : type(type) {}
-};
-class Expression : public Node
-{
-public:
-    Expression *left;
-    Expression *right;
-    Expression(Expression *left, Expression *right) : left(left), right(right) {}
-};
 #endif

@@ -1,13 +1,10 @@
 %{
-#include <iostream>
-#include <string>
-#include "output.hpp"
-using namespace std;
-extern int yylineno; 
-int yylex();
-int yyerror(char *s);
 
-// You might need to define your own data structures or include other headers
+#include "output.hpp"
+extern int yylineno; 
+void yyerror(char const *s);
+ int yylex();
+
 
 %}
 
@@ -23,53 +20,53 @@ int yyerror(char *s);
 %%
 
 Program:
-    Statements 
+    Statements {}
     ;
 
 Statements:
-    Statement 
-    | Statements Statement 
+    Statement {output::printProductionRule(1);}
+    | Statements Statement  {output::printProductionRule(2);}
     ;
 
 Statement:
-    LBRACE Statements RBRACE 
-    | Type ID SC 
-    | Type ID ASSIGN Exp SC
-    | ID ASSIGN Exp SC
-    | Call SC
-    | RETURN SC
-    | IF LPAREN Exp RPAREN Statement
+    LBRACE Statements RBRACE {output::printProductionRule(3);}
+    | Type ID SC {output::printProductionRule(4);}
+    | Type ID ASSIGN Exp SC {output::printProductionRule(5);}
+    | ID ASSIGN Exp SC {output::printProductionRule(6);}
+    | Call SC {output::printProductionRule(7);}
+    | RETURN SC {output::printProductionRule(8);}
+    | IF LPAREN Exp RPAREN Statement {output::printProductionRule(9);}
 
-    | WHILE LPAREN Exp RPAREN Statement
-    | BREAK SC
-    | CONTINUE SC
+    | WHILE LPAREN Exp RPAREN Statement {output::printProductionRule(10);}
+    | BREAK SC {output::printProductionRule(11);}
+    | CONTINUE SC {output::printProductionRule(12);}
     ;
 
 Call:
-    ID LPAREN Exp RPAREN
+    ID LPAREN Exp RPAREN {output::printProductionRule(13);}
     ;
 
 Type:
-    INT     
-    | BYTE  
-    | BOOL 
+    INT     {output::printProductionRule(14);}
+    | BYTE  {output::printProductionRule(15);}
+    | BOOL {output::printProductionRule(16);}
     ;
 
 Exp:
-    LPAREN Exp RPAREN
-    | Exp BINOP Exp
-    | ID
-    | Call
-    | NUM
-    | NUM B
-    | STRING
-    | TRUE
-    | FALSE    
-    | NOT Exp 
-    | Exp AND Exp 
-    | Exp OR Exp 
-    | Exp RELOP Exp 
-    | LPAREN Type RPAREN Exp 
+    LPAREN Exp RPAREN {output::printProductionRule(17);}
+    | Exp BINOP Exp {output::printProductionRule(18);}
+    | ID {output::printProductionRule(19);}
+    | Call {output::printProductionRule(20);}
+    | NUM {output::printProductionRule(21);}
+    | NUM B {output::printProductionRule(22);}
+    | STRING {output::printProductionRule(23);}
+    | TRUE {output::printProductionRule(24);}
+    | FALSE     {output::printProductionRule(25);}
+    | NOT Exp  {output::printProductionRule(26);}
+    | Exp AND Exp  {output::printProductionRule(27);}
+    | Exp OR Exp  {output::printProductionRule(28);}
+    | Exp RELOP Exp  {output::printProductionRule(29);}
+    | LPAREN Type RPAREN Exp  {output::printProductionRule(30);}
     ;
 
 %%
@@ -80,14 +77,11 @@ int main()
     return yyparse();
 } 
 
-int yyerror(char * s)
+void yyerror(char const * s)
 {
-    printf("Parse error: %s! Bye now\n",s); 
-    exit(1);
-    return 0;
+    printf("Error ");
 } 
 
-int yylex()
-{
-    return getchar();
-}
+
+
+

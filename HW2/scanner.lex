@@ -1,14 +1,7 @@
 %{
-/* Declartions Section */
-#include <stdio.h>
-#include <iostream>
-#include <string>
-#include <stdlib.h>
-#include "source.tab.hpp"
-#include "tokens.hpp"
-using std::string;
-void (string);
 
+#include "parser.tab.hpp"
+#include "output.hpp"
 %}
 
 %option yylineno
@@ -17,7 +10,7 @@ digit ([0-9])
 letter ([a-zA-Z])
 whitespace ([ \t\n\r])
 %%
-"void" { yylval= ;return VOID;}
+
 "int" { return INT;}
 "byte" { return BYTE;}
 "b" { return B;}
@@ -50,11 +43,4 @@ whitespace ([ \t\n\r])
 
 . {return UNKNOWN;};
 %%
-//validhex ((\x0[9AD])| \x[2-6][0-9A-Fa-f] | x[7][0-9A-Ea-e])
-//  should print in the following foramt <line number> <token name> <value>
-// note that line number refers to the line number where the token ENDS not where it starts
-// value refers to the lexeme excluding comments and strings
-void (string tokenName)
-{
-    printf("%d %s %s\n", yylineno, tokenName.c_str(), yytext);
-}
+
