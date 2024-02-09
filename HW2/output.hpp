@@ -2,8 +2,6 @@
 #define _236360_1_
 
 #include <string>
-#include <vector>
-
 namespace output
 {
     extern const std::string rules[];
