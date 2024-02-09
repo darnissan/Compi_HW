@@ -7,18 +7,19 @@ void yyerror(char const *s);
 
 
 %}
-%nonassoc LBRACE RBRACE SC IF  WHILE BREAK CONTINUE RETURN INT BYTE BOOL TRUE FALSE BINOP
-%nonassoc TYPE ID STRING
-%nonassoc  NUM B
+%left SC
+%right RETURN BREAK CONTINUE
+%right INT BYTE BOOL TRUE FALSE
+%right  ID STRING
+%right  NUM B
 %left ASSIGN 
 %left OR
 %left AND
 %left RELOP
-%left '+' '-' NOT
-%left '*' '/'
-%nonassoc DOUBLEOP
-%nonassoc LPAREN RPAREN
-%right ELSE
+%left BINOP NOT
+%left LPAREN LBRACE
+%right RPAREN RBRACE
+%right WHILE IF ELSE
 %%
 
 Program:

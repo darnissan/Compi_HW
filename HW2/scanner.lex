@@ -32,9 +32,8 @@ whitespace ([ \t\n\r])
 "{" { return LBRACE;}
 "}" { return RBRACE;}
 "=" {return ASSIGN;}
-"++|--" {return DOUBLEOP;}
 "=="|"!="|"<"|">"|"<="|">=" { return RELOP;}
-"+"|"-"|"*"|"/" { return BINOP;}
+"*"|"/"|"+"|"-" { return BINOP;}
 [a-zA-Z][a-zA-Z0-9]*  { return ID;}
 0|[1-9][0-9]* { return NUM;}
 \"([^\n\r\"\\]|\\[rnt"\\])+\" { return STRING;}

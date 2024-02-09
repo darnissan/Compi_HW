@@ -1,0 +1,7 @@
+if (a) 
+    if (b)
+        int x=3;
+    else
+        int y=2;
+
+

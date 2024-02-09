@@ -40,8 +40,7 @@ enum class TOKENS
     NUM,
     STRING,
     COMMENT,
-    DOUBLEO,
-    CAST
+    DOUBLEO
 };
 
 #endif
