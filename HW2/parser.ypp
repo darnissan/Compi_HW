@@ -17,8 +17,10 @@ void yyerror(char const *s);
 %left AND
 %left RELOP
 %left BINOP NOT
-%left LPAREN LBRACE
-%right RPAREN RBRACE
+%left  LBRACE
+%right RBRACE
+%left  LPAREN
+%right RPAREN 
 %right WHILE IF ELSE
 %%
 
