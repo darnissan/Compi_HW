@@ -41,7 +41,6 @@ whitespace ([ \t\n\r])
 \"([^\n\r\"\\]|\\[rnt"\\])+\" { return STRING;}
 \/\/[^\r\n]*[\r|\n|\r\n]? 
 {whitespace}+     ;  // ignore whitespace
-
 . {output::errorLex(yylineno);
 exit (1);};
 %%

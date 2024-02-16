@@ -977,13 +977,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 45 "scanner.lex"
+#line 44 "scanner.lex"
 {output::errorLex(yylineno);
 exit (1);};
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 47 "scanner.lex"
+#line 46 "scanner.lex"
 ECHO;
 	YY_BREAK
 #line 990 "lex.yy.c"
@@ -2003,7 +2003,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 47 "scanner.lex"
+#line 46 "scanner.lex"
 
 
 
