@@ -16,7 +16,8 @@ void yyerror(char const *s);
 %left ADDITION_SUBSTRACTION
 %left MULTIPLICATION_DIVISION
 %right NOT
-%left LPAREN RPAREN LBRACE RBRACE 
+%left LBRACE RBRACE 
+%left LPAREN RPAREN 
 %right  ELSE
 %%
 
