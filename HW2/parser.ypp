@@ -7,21 +7,17 @@ void yyerror(char const *s);
 
 
 %}
-%left SC
-%right RETURN BREAK CONTINUE
-%right INT BYTE BOOL TRUE FALSE
-%right  ID STRING
-%right  NUM B
-%left ASSIGN 
+%token INT BYTE B BOOL CONST TRUE FALSE IF RETURN WHILE BREAK CONTINUE SC COMMA COMMENT ID NUM STRING 
+%right ASSIGN 
 %left OR
 %left AND
+%left EQ_NEQ
 %left RELOP
-%left BINOP NOT
-%left  LBRACE
-%right RBRACE
-%left  LPAREN
-%right RPAREN 
-%right WHILE IF ELSE
+%left ADDITION_SUBSTRACTION
+%left MULTIPLICATION_DIVISION
+%right NOT
+%left LPAREN RPAREN LBRACE RBRACE 
+%right  ELSE
 %%
 
 Program:
@@ -59,7 +55,9 @@ Type:
 
 Exp:
     LPAREN Exp RPAREN {output::printProductionRule(19);}
-    | Exp BINOP Exp {output::printProductionRule(20);}
+    
+    | Exp ADDITION_SUBSTRACTION Exp {output::printProductionRule(20);}
+    |  Exp MULTIPLICATION_DIVISION Exp {output::printProductionRule(20);}
     | ID {output::printProductionRule(21);}
     | Call {output::printProductionRule(22);}
     | NUM {output::printProductionRule(23);}
@@ -70,6 +68,7 @@ Exp:
     | NOT Exp  {output::printProductionRule(28);}
     | Exp AND Exp  {output::printProductionRule(29);}
     | Exp OR Exp  {output::printProductionRule(30);}
+    | Exp EQ_NEQ Exp  {output::printProductionRule(31);}
     | Exp RELOP Exp  {output::printProductionRule(31);}
     | LPAREN Type RPAREN Exp  {output::printProductionRule(32);}
     ;

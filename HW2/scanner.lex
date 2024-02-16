@@ -32,13 +32,17 @@ whitespace ([ \t\n\r])
 "{" { return LBRACE;}
 "}" { return RBRACE;}
 "=" {return ASSIGN;}
-"=="|"!="|"<"|">"|"<="|">=" { return RELOP;}
-"*"|"/"|"+"|"-" { return BINOP;}
+">"|"<"|"<="|">=" { return RELOP;}
+"=="|"!=" { return EQ_NEQ;}
+"*"|"/" { return MULTIPLICATION_DIVISION;}
+"-"|"+" {return ADDITION_SUBSTRACTION;}
 [a-zA-Z][a-zA-Z0-9]*  { return ID;}
 0|[1-9][0-9]* { return NUM;}
 \"([^\n\r\"\\]|\\[rnt"\\])+\" { return STRING;}
+\/\/[^\r\n]*[\r|\n|\r\n]? 
 {whitespace}+     ;  // ignore whitespace
 
-. {printf("error");};
+. {output::errorLex(yylineno);
+exit (1);};
 %%
 

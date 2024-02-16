@@ -35,12 +35,14 @@ enum class TOKENS
     RBRACE,
     ASSIGN,
     RELOP,
-    BINOP,
+    ADDITION_SUBTRACTION,
+    MULTIPLICATION_DIVISION,
     ID,
     NUM,
     STRING,
     COMMENT,
-    DOUBLEO
+    DOUBLEO,
+    EQ_NEQ
 };
 
 #endif
