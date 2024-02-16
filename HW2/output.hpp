@@ -12,7 +12,6 @@ namespace output
 
 enum class TOKENS
 {
-    VOID,
     INT,
     BYTE,
     B,
@@ -40,8 +39,6 @@ enum class TOKENS
     ID,
     NUM,
     STRING,
-    COMMENT,
-    DOUBLEO,
     EQ_NEQ
 };
 
